@@ -1,6 +1,3 @@
-import random
-from wonderwords import RandomWord
-
 SNOWMAN_MIN_WORD_LENGTH = 5
 SNOWMAN_MAX_WORD_LENGTH = 8
 SNOWMAN_MAX_WRONG_GUESSES = 7
@@ -27,14 +24,6 @@ def snowman(snowman_word=None):
     If the player wins and, 
     'Sorry, you lose! The word was {snowman_word}' if the player loses
     """
-    # Generate a random word if snowman_word is not provided
-    if snowman_word is None:
-        random_word_generator = RandomWord()
-        snowman_word = random_word_generator.word(
-            word_min_length=SNOWMAN_MIN_WORD_LENGTH, 
-            word_max_length=SNOWMAN_MAX_WORD_LENGTH
-        ).lower()
-
     # Initialize the correct_letter_guess_statuses dictionary
     correct_letter_guess_statuses = build_letter_status_dict(snowman_word)
     wrong_guesses_list = []
