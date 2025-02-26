@@ -20,46 +20,49 @@ def print_snowman(wrong_guesses_count):
     for i in range(SNOWMAN_MAX_WRONG_GUESSES - wrong_guesses_count, SNOWMAN_MAX_WRONG_GUESSES):
         print(SNOWMAN_GRAPHIC[i])
     
-def snowman(snowman_word):
+def snowman(snowman_word=None):
     """Complete the snowman function
     replace "pass" below with your own code
     It should print 'Congratulations, you win!'
     If the player wins and, 
     'Sorry, you lose! The word was {snowman_word}' if the player loses
     """
-    # pass
-    """Runs the Snowman game."""
-    random_word_generator = RandomWord()
-    snowman_word = random_word_generator.word(
-        word_min_length=SNOWMAN_MIN_WORD_LENGTH, 
-        word_max_length=SNOWMAN_MAX_WORD_LENGTH
-    ).lower()
+    # Generate a random word if snowman_word is not provided
+    if snowman_word is None:
+        random_word_generator = RandomWord()
+        snowman_word = random_word_generator.word(
+            word_min_length=SNOWMAN_MIN_WORD_LENGTH, 
+            word_max_length=SNOWMAN_MAX_WORD_LENGTH
+        ).lower()
 
-    print(f"debug info: {snowman_word}")  # Remove before sharing
-
+    # Initialize the correct_letter_guess_statuses dictionary
     correct_letter_guess_statuses = build_letter_status_dict(snowman_word)
     wrong_guesses_list = []
 
+    # Loop until the player wins or loses
     while len(wrong_guesses_list) < SNOWMAN_MAX_WRONG_GUESSES:
         print("\nWord: " + generate_word_progress_string(snowman_word, correct_letter_guess_statuses))
         print("Wrong guesses:", " ".join(sorted(wrong_guesses_list)))
-
+        # Get a letter from the user
         user_input = get_letter_from_user(correct_letter_guess_statuses, wrong_guesses_list)
-
+        # Check if the user input is in the word
         if user_input in correct_letter_guess_statuses:
             print("You guessed a letter that's in the word!")
             correct_letter_guess_statuses[user_input] = True
+        # If the user input is not in the word
         else:
             print(f"The letter {user_input} is not in the word")
             wrong_guesses_list.append(user_input)
-
+        # Print the snowman graphic
         print_snowman(len(wrong_guesses_list))
 
+        # If the player wins
         if is_word_guessed(snowman_word, correct_letter_guess_statuses):
-            print(f"\nCongratulations! You guessed the word: {snowman_word}")
+            print("Congratulations, you win!")
             return
-
-    print(f"\nGame Over! The secret word was: {snowman_word}")
+    
+    # If the player loses
+    print(f"\nSorry, you lose! The word was {snowman_word}")
 
 
 def print_snowman_graphic(wrong_guesses_count):
