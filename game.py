@@ -30,7 +30,8 @@ def snowman(snowman_word=None):
 
     # Loop until the player wins or loses
     while len(wrong_guesses_list) < SNOWMAN_MAX_WRONG_GUESSES:
-        print("\nWord: " + generate_word_progress_string(snowman_word, correct_letter_guess_statuses))
+        print("\nWord: " + 
+             generate_word_progress_string(snowman_word, correct_letter_guess_statuses))
         print("Wrong guesses:", " ".join(sorted(wrong_guesses_list)))
         # Get a letter from the user
         user_input = get_letter_from_user(correct_letter_guess_statuses, wrong_guesses_list)
